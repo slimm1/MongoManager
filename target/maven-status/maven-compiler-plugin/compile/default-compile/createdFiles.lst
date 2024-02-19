@@ -8,3 +8,4 @@ utilities\AppProperties.class
 com\slimm1\login\Login.class
 view\LoginFrame.class
 control\LauncherController.class
+process\DotsAnimation.class

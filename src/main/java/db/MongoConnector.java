@@ -14,6 +14,7 @@ import com.mongodb.client.MongoIterable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
+import process.DotsAnimation;
 import utilities.AppConstants;
 import utilities.AppProperties;
 
@@ -42,18 +43,22 @@ public class MongoConnector {
     }
     
     private void tryConnect(){
+        Thread t = new DotsAnimation();
             ConnectionString connString = new ConnectionString(getConnectionString());
             MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(connString)
                 .build();
         try(MongoClient client = MongoClients.create(settings)){
-            System.out.println("Conexión establecida. Base de datos seleccionada --> " + myProps.getProperty(AppConstants.PROP_DB));
+            System.out.println("Base de datos seleccionada --> " + myProps.getProperty(AppConstants.PROP_DB));
             System.out.println("Bases de datos disponibles: ");
-            beginThread(client);
+            t.start();
+            listDatabases(client);
+            t.interrupt();
         }
         catch(Exception e){
-            System.out.println("Error al abrir la conexión :( ...");
+            System.out.println("Error al abrir la conexión :(");
             System.out.println("Cadena de conexion --> " + getConnectionString());
+            t.interrupt();
         }
     }
     
@@ -66,9 +71,6 @@ public class MongoConnector {
             return null;
         }
     }
-    public static void main(String[] args) {
-        MongoConnector.getInstance();
-    }
     
     private void listDatabases(MongoClient client){
         int count=1;
@@ -78,28 +80,8 @@ public class MongoConnector {
         }
     }
     
-    private void beginThread(MongoClient client){
-        try {
-            // Iniciar la animación de puntos suspensivos
-            Thread animationThread = new Thread(() -> {
-                try {
-                    while (true) {
-                        System.out.print(".");
-                        Thread.sleep(500); // Pausa de medio segundo
-                    }
-                } catch (InterruptedException e) {
-                    // Manejar interrupción
-                }
-            });
-            animationThread.start();
-            
-            listDatabases(client);
-
-            // Detener la animación y continuar con el resto del código
-            animationThread.interrupt();
-            animationThread.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MongoConnector.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void main(String[] args) {
+        MongoConnector.getInstance();
     }
+    
 }
