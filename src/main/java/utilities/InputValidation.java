@@ -1,6 +1,8 @@
 package utilities;
 
+import com.mongodb.client.ListDatabasesIterable;
 import java.util.Scanner;
+import org.bson.Document;
 
 /**
  *
@@ -14,5 +16,23 @@ public class InputValidation {
             answer = input.nextLine();
         }
         return Integer.parseInt(answer);
+    }
+    
+    public static boolean validateDb(String answer, ListDatabasesIterable<Document> databases){
+        for(Document d: databases){
+            if(d.getString("name").equalsIgnoreCase(answer)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean validateDeleteDb(String db){
+        return switch (db) {
+            case "admin" -> false;
+            case "config" -> false;
+            case "local" -> false;
+            default -> true;
+        };
     }
 }

@@ -17,4 +17,6 @@ public class AppConstants {
     public static final String PROP_DB = "database";
     public static final String PROP_COLLECTION = "collection";
     public static final String PROP_MODIFIED = "last_modified";
+    
+    public static final String DEFAULT_DBNAME = "test";
 }

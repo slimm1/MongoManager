@@ -52,7 +52,7 @@ public class CollectionMenuController {
             case 5 -> {
             
             }
-            case 6 -> System.out.println("Hasta pronto");
+            case 6 -> DbMenuController.getInstance().launchMenu();
         }
     }
 }
