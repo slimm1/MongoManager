@@ -21,7 +21,6 @@ public class DotsAnimation extends Thread{
                 }           
             }
         } catch (InterruptedException e) {
-            System.out.println("ERROR FATAL HILO DESTRUIDO");
         }         
     }
     
