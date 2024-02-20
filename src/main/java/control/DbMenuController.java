@@ -39,37 +39,55 @@ public class DbMenuController {
         if(firstConnection){
             dbMenu.display();
             if(input == null) input = new Scanner(System.in);
-            int answer = InputValidation.checkAnswer(input.nextLine(), 4, input);
+            int answer = InputValidation.checkAnswer(input.nextLine(), 5, input);
             switch(answer){
                 case 1 -> {
-                    CollectionMenuController.getInstance().launchMenu();
+                    if(!AppProperties.getInstance().getProperty(AppConstants.PROP_DB).isBlank()){
+                        CollectionMenuController.getInstance().launchMenu();
+                    }
+                    else{System.out.println("Debes seleccionar una base de datos para continuar"); launchMenu();}
                 }
                 case 2 -> {
                     switchDatabase();
                     CollectionMenuController.getInstance().launchMenu();
                 }
                 case 3 -> {
-                    removeDatabase();
-                    launchMenu();
+                    if(!AppProperties.getInstance().getProperty(AppConstants.PROP_DB).isBlank()){
+                        removeDatabase();
+                        launchMenu();
+                    }
+                    else{System.out.println("Debes seleccionar una base de datos para continuar"); launchMenu();}
                 }
-                case 4 -> System.out.println("Hasta pronto");
+                case 4 -> {
+                    createDatabase();
+                    CollectionMenuController.getInstance().launchMenu();
+                }
+                case 5 ->{                     
+                    if(AppProperties.getInstance().getProperty(AppConstants.PROP_DB).isBlank()){
+                        AppProperties.getInstance().setProperty(AppConstants.PROP_DB, AppConstants.DEFAULT_DBNAME);
+                    }
+                    System.out.println("Hasta pronto");}
             }
         }
     }
     
     private void switchDatabase(){
+        int count=1;
         ListDatabasesIterable<Document> databases = MongoConnector.getInstance().listDatabases();
-        if(databases != null){
-            System.out.println("Introduzca el nombre de una de las bd disponibles:");
-            String answer =input.nextLine();
-            while(!InputValidation.validateDb(answer, databases) || answer.equalsIgnoreCase(AppProperties.getInstance().getProperty(AppConstants.PROP_DB))){
-                if(!InputValidation.validateDb(answer, databases)) System.out.println("El nombre introducido no coincide con ningun registro");
-                else System.out.println("Ya estás conectado a esa base de datos");
-                answer =input.nextLine();
-            }
-            AppProperties.getInstance().setProperty(AppConstants.PROP_DB, answer);
-            MongoConnector.getInstance().tryConnect();
+        System.out.println("Bases de datos disponibles: ");
+        for (Document database : databases) {
+            System.out.println("\t" + count + ". " +database.getString("name"));
+            count++;
         }
+        System.out.println("Introduzca el nombre de una de las bd disponibles:");
+        String answer =input.nextLine();
+        while(!InputValidation.validateDb(answer, databases) || answer.equalsIgnoreCase(AppProperties.getInstance().getProperty(AppConstants.PROP_DB))){
+            if(!InputValidation.validateDb(answer, databases)) System.out.println("El nombre introducido no coincide con ningun registro");
+            else System.out.println("Ya estás conectado a esa base de datos");
+            answer =input.nextLine();
+        }
+        AppProperties.getInstance().setProperty(AppConstants.PROP_DB, answer);
+        MongoConnector.getInstance().tryConnect();
     }
     
     private void removeDatabase(){
@@ -84,10 +102,23 @@ public class DbMenuController {
         }
         else if(InputValidation.validateDeleteDb(AppProperties.getInstance().getProperty(AppConstants.PROP_DB)) && answer.equals("si")){
             MongoConnector.getInstance().dropDatabase(AppProperties.getInstance().getProperty(AppConstants.PROP_DB));
-            AppProperties.getInstance().setProperty(AppConstants.PROP_DB, null);
+            AppProperties.getInstance().setProperty(AppConstants.PROP_DB, "");
             System.out.println("Base de datos eliminada con exito");
         }
     }   
+    
+    private void createDatabase(){
+        System.out.println("Introduce el nombre de la nueva base de datos: ");
+        String answer = input.nextLine();
+        ListDatabasesIterable<Document> databases = MongoConnector.getInstance().listDatabases();
+        while(InputValidation.validateDb(answer, databases)){
+            System.out.println("Ya existe una base de datos con este nombre, por favor, introduce otro nombre:");
+            answer = input.nextLine();
+        }
+        System.out.println("Base de datos registrada con éxito"); 
+        AppProperties.getInstance().setProperty(AppConstants.PROP_DB, answer);
+        MongoConnector.getInstance().tryConnect();
+    }
     
     public static void main(String[] args) {
         DbMenuController.getInstance().launchMenu();

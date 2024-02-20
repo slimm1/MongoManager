@@ -7,7 +7,6 @@ import com.mongodb.client.ListDatabasesIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoIterable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
@@ -99,13 +98,7 @@ public class MongoConnector {
     }
     
     public ListDatabasesIterable<Document> listDatabases(){
-        int count=1;
         ListDatabasesIterable<Document> databases = client.listDatabases();
-        System.out.println("Bases de datos disponibles: ");
-        for (Document database : databases) {
-            System.out.println("\t" + count + ". " +database.getString("name"));
-            count++;
-        }
         return databases;
     }
 }
