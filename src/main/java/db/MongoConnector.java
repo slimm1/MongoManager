@@ -17,6 +17,8 @@ public class MongoConnector {
     
     private static MongoConnector instance;
     
+    private MongoClient client;
+    
     private MongoDatabase db;
     
     private AppProperties myProps;
@@ -43,7 +45,8 @@ public class MongoConnector {
         MongoClientSettings settings = MongoClientSettings.builder()
             .applyConnectionString(connString)
             .build();
-        try(MongoClient client = MongoClients.create(settings)){
+        try{
+            client = MongoClients.create(settings);
             System.out.println("Probando conexion");
             t.start();
             Thread.sleep(1500);
@@ -76,7 +79,7 @@ public class MongoConnector {
         }
     }
     
-    private void listDatabases(MongoClient client){
+    public int listDatabases(){
         int count=1;
         System.out.println("Bases de datos disponibles: ");
         MongoIterable<String> dbs = client.listDatabaseNames();
@@ -84,5 +87,6 @@ public class MongoConnector {
             System.out.println(count + ". " + db);
             count++;
         }
+        return count;
     }
 }

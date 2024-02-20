@@ -48,6 +48,14 @@ public class DbMenuController {
         }
     }
     
+    private void switchDatabase(){
+        int count = MongoConnector.getInstance().listDatabases();
+        int answer = InputValidation.checkAnswer(input.nextLine(), count, input);
+        switch(count){
+            
+        }
+    }
+    
     public static void main(String[] args) {
         DbMenuController.getInstance().launchMenu();
     }
