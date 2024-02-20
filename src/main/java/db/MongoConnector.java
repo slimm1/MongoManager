@@ -3,12 +3,13 @@ package db;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
+import com.mongodb.client.ListDatabasesIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoIterable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bson.Document;
 import process.DotsAnimation;
 import utilities.AppConstants;
 import utilities.AppProperties;
@@ -25,7 +26,6 @@ public class MongoConnector {
     
     private MongoConnector(){
         myProps = AppProperties.getInstance();
-        tryConnect();
     }
     
     public static MongoConnector getInstance(){
@@ -36,10 +36,10 @@ public class MongoConnector {
     }
     
     private String getConnectionString(){
-        return AppConstants.CONNECTION_STRING+myProps.getProperty(AppConstants.PROP_HOST)+":"+myProps.getProperty(AppConstants.PROP_PORT);
+        return AppConstants.CONNECTION_STRING + myProps.getProperty(AppConstants.PROP_HOST)+":" + myProps.getProperty(AppConstants.PROP_PORT);
     }
     
-    private void tryConnect(){
+    public boolean tryConnect(){
         Thread t = new DotsAnimation();
         ConnectionString connString = new ConnectionString(getConnectionString());
         MongoClientSettings settings = MongoClientSettings.builder()
@@ -52,21 +52,39 @@ public class MongoConnector {
             Thread.sleep(1500);
             tryConnectCollection(client);
             t.interrupt();
-            System.out.println("***** Conexion establecida *****");
+            System.out.println("--------------------------------");
+            System.out.println("|     Conexion establecida     |");
+            System.out.println("--------------------------------");
+            return true;
         }
         catch(MongoException m){
             System.out.println("\n***** Error al abrir la conexion *****");
+            System.out.println("----------------------------------------");
             System.out.println("Cadena de conexion --> " + getConnectionString());
-            System.out.println("REVISAR QUE EL PUERTO " + myProps.getProperty(AppConstants.PROP_PORT) + " ESTA OPERATIVO");
+            System.out.println("REVISAR QUE EL PUERTO " + myProps.getProperty(AppConstants.PROP_PORT) + " ESTA OPERATIVO y reinicia la app");
             t.interrupt();
+            return false;
         } catch (InterruptedException ex) {
             Logger.getLogger(MongoConnector.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
     private void tryConnectCollection(MongoClient client) throws MongoException{
         db = client.getDatabase(myProps.getProperty(AppConstants.PROP_DB));
         db.createCollection(myProps.getProperty(AppConstants.PROP_COLLECTION));
+        System.out.println("coleccion --> " + myProps.getProperty(AppConstants.PROP_COLLECTION) + " creada con exito");
+    }
+    
+    public boolean dropDatabase(String dbName){
+        try{
+            db.drop();
+            System.out.println();
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
     
     public MongoDatabase getDatabase(){
@@ -79,14 +97,8 @@ public class MongoConnector {
         }
     }
     
-    public int listDatabases(){
-        int count=1;
-        System.out.println("Bases de datos disponibles: ");
-        MongoIterable<String> dbs = client.listDatabaseNames();
-        for(String db:dbs){
-            System.out.println(count + ". " + db);
-            count++;
-        }
-        return count;
+    public ListDatabasesIterable<Document> listDatabases(){
+        ListDatabasesIterable<Document> databases = client.listDatabases();
+        return databases;
     }
 }

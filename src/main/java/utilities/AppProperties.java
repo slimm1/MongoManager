@@ -15,7 +15,7 @@ public class AppProperties {
 
     private Properties properties;
     
-    public static AppProperties instance;
+    private static AppProperties instance;
 
     private AppProperties() {
         properties = new Properties();
