@@ -22,7 +22,7 @@ public class MongoConnector {
     private AppProperties myProps;
     
     private MongoConnector(){
-        myProps = new AppProperties();
+        myProps = AppProperties.getInstance();
         tryConnect();
     }
     
@@ -44,7 +44,6 @@ public class MongoConnector {
             .applyConnectionString(connString)
             .build();
         try(MongoClient client = MongoClients.create(settings)){
-            System.out.println("Base de datos seleccionada --> " + myProps.getProperty(AppConstants.PROP_DB));
             System.out.println("Probando conexion");
             t.start();
             Thread.sleep(1500);

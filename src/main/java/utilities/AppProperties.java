@@ -14,8 +14,10 @@ import java.util.Properties;
 public class AppProperties {
 
     private Properties properties;
+    
+    public static AppProperties instance;
 
-    public AppProperties() {
+    private AppProperties() {
         properties = new Properties();
         try {
             FileInputStream inputStream = new FileInputStream(AppConstants.PROPS_FILE_PATH+AppConstants.PROPS_FILE_NAME);
@@ -59,7 +61,10 @@ public class AppProperties {
         }
     }
     
-    public Properties getProperties(){
-        return properties;
+    public static AppProperties getInstance(){
+        if(instance == null){
+            instance = new AppProperties();
+        }
+        return instance;
     }
 }
