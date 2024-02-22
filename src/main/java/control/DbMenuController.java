@@ -119,8 +119,4 @@ public class DbMenuController {
         AppProperties.getInstance().setProperty(AppConstants.PROP_DB, answer);
         MongoConnector.getInstance().tryConnect();
     }
-    
-    public static void main(String[] args) {
-        DbMenuController.getInstance().launchMenu();
-    }
 }
