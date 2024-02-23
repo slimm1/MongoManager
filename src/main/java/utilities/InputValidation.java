@@ -14,7 +14,7 @@ public class InputValidation {
             System.out.println("Valor incorrecto para precio, introducelo de nuevo:");
             precio = input.nextLine();
         }
-        return Integer.parseInt(precio);
+        return Double.parseDouble(precio);
     }
     
     public static int validateAge(String age, Scanner input){

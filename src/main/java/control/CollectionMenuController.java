@@ -37,7 +37,7 @@ public class CollectionMenuController {
     public void launchMenu(){
         colMenu.display();
         if(input == null) input = new Scanner(System.in);
-        int answer = InputValidation.checkAnswer(input.nextLine(), 6, input);
+        int answer = InputValidation.checkAnswer(input.nextLine(), 10, input);
         switch(answer){
             case 1 -> {
                 addNewUser();
