@@ -4,7 +4,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
-import model.Show;
 import model.User;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -61,7 +60,7 @@ public class DataLoader {
     }
     
     public List<User> listByUsername(String username){
-        Bson filter = Filters.eq("username", username);
+        Bson filter = Filters.regex("username", username);
         return userCollection.find(filter).into(new ArrayList());
     }
     

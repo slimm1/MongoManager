@@ -12,6 +12,5 @@ utilities\AppConstants.class
 view\DatabaseMenu.class
 db\DataLoader.class
 dao\Dao.class
-dao\ShowDao.class
 model\User.class
 process\DotsAnimation.class
