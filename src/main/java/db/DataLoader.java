@@ -1,10 +1,13 @@
 package db;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
+import model.Show;
 import model.User;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -52,9 +55,23 @@ public class DataLoader {
         }
     }
     
+    public List<User> listByShow(String show){
+        Bson filter = Filters.eq("shows.titulo", show);
+        return userCollection.find(filter).into(new ArrayList());
+    }
+    
+    public List<User> listByUsername(String username){
+        Bson filter = Filters.eq("username", username);
+        return userCollection.find(filter).into(new ArrayList());
+    }
+    
+    public List<User> listByAge(int age){
+        Bson filter = Filters.eq("edad", age);
+        return userCollection.find(filter).into(new ArrayList());
+    }
+    
     public List<User> getAllUsers(){
-        List<User> lista = new ArrayList();
-        return userCollection.find().into(lista);
+        return userCollection.find().into(new ArrayList());
     }
     
     public static DataLoader getInstance(){

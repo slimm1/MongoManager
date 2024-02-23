@@ -2,6 +2,7 @@ package dao;
 
 import db.DataLoader;
 import java.util.List;
+import model.Show;
 import model.User;
 import org.bson.types.ObjectId;
 
@@ -26,8 +27,19 @@ public class UserDao implements Dao<User>{
     }
 
     @Override
-    public List<User> list() {
+    public List<User> listAll() {
         return DataLoader.getInstance().getAllUsers();
     }
     
+    public List<User> listByShow(String show){
+        return DataLoader.getInstance().listByShow(show);
+    }
+    
+    public List<User> listByName(String username){
+        return DataLoader.getInstance().listByUsername(username);
+    }
+
+    public List<User> listByAge(int age){
+        return DataLoader.getInstance().listByAge(age);
+    }
 }

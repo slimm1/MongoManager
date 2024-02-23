@@ -69,13 +69,16 @@ public class CollectionMenuController {
                 launchMenu();
             }
             case 7 -> {
-                
+                listByShow();
+                launchMenu();
             }
             case 8 -> {
-                
+                listByUsername();
+                launchMenu();
             }
             case 9 -> {
-            
+                listByAge();
+                launchMenu();
             }
             case 10 -> DbMenuController.getInstance().launchMenu();
         }
@@ -95,8 +98,8 @@ public class CollectionMenuController {
     
     private void listAllUsers(){
         System.out.println("Usuarios registrados:");
-        for(User u : userDao.list()){
-            System.out.println("\t"+u.getUsername());
+        for(User u : userDao.listAll()){
+            System.out.println("\t->"+u.getUsername());
         }
     }
     
@@ -104,7 +107,7 @@ public class CollectionMenuController {
         listAllUsers();
         System.out.println("Elige un usuario de la lista introduciendo su nombre: ");
         String username = input.nextLine();
-        List<User> list = userDao.list();
+        List<User> list = userDao.listAll();
         for(User u : list){
             if(u.getUsername().equals(username)){
                 System.out.println("Usuario seleccionado --> " + u.getUsername());
@@ -132,7 +135,7 @@ public class CollectionMenuController {
             double precio = InputValidation.validatePrice(input.nextLine(), input);
             newShow.setPrecio(precio);
             u.getShows().add(newShow);
-            if(userDao.update(u)) System.out.println("Show añadido con éxito:");
+            if(userDao.update(u)) System.out.println("Show añadido con exito:");
             else{System.out.println("Error al añadir el show");} 
         }       
     }
@@ -154,6 +157,33 @@ public class CollectionMenuController {
             u.setEdad(edad);
             if(userDao.update(u)) System.out.println("El usuario se ha actualizado con exito");
             else System.out.println("Error al actualizar el usuario");
+        }
+    }
+    
+    private void listByShow(){
+        System.out.println("Introduce un show para buscar: ");
+        String show = input.nextLine();
+        System.out.println("--> RESULTADOS de la busqueda: ");
+        for(User u:userDao.listByShow(show)){
+            System.out.println("\t->"+u.getUsername());
+        }
+    }
+    
+    private void listByUsername(){
+        System.out.println("Introduce username para buscar: ");
+        String username = input.nextLine();
+        System.out.println("--> RESULTADOS de la busqueda: ");
+        for(User u:userDao.listByName(username)){
+            System.out.println("\t->"+u.getUsername());
+        }
+    }
+    
+    private void listByAge(){
+        System.out.println("Introduce una edad para buscar: ");
+        int age = InputValidation.validateAge(input.nextLine(), input);
+        System.out.println("--> RESULTADOS de la busqueda: ");
+        for(User u:userDao.listByAge(age)){
+            System.out.println("\t->"+u.getUsername());
         }
     }
 }
