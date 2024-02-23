@@ -10,6 +10,9 @@ import com.mongodb.client.MongoDatabase;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import process.DotsAnimation;
 import utilities.AppConstants;
 import utilities.AppProperties;
@@ -24,7 +27,10 @@ public class MongoConnector {
     
     private AppProperties myProps;
     
+    private CodecRegistry pojoCodecRegistry;
+    
     private MongoConnector(){
+        initPojo();
         myProps = AppProperties.getInstance();
     }
     
@@ -71,9 +77,10 @@ public class MongoConnector {
     }
     
     private void tryConnectCollection(MongoClient client) throws MongoException{
-        db = client.getDatabase(myProps.getProperty(AppConstants.PROP_DB));
-        db.createCollection(myProps.getProperty(AppConstants.PROP_COLLECTION));
-        System.out.println("coleccion --> " + myProps.getProperty(AppConstants.PROP_COLLECTION) + " creada con exito");
+        db = client.getDatabase(myProps.getProperty(AppConstants.PROP_DB)).withCodecRegistry(pojoCodecRegistry);
+        db.createCollection(myProps.getProperty(AppConstants.PROP_USER_COLLECTION));
+        db.createCollection(myProps.getProperty(AppConstants.PROP_SHOW_COLLECTION));
+        System.out.println("colecciones agregadas en " + myProps.getProperty(AppConstants.PROP_DB));
     }
     
     public boolean dropDatabase(String dbName){
@@ -100,5 +107,11 @@ public class MongoConnector {
     public ListDatabasesIterable<Document> listDatabases(){
         ListDatabasesIterable<Document> databases = client.listDatabases();
         return databases;
+    }
+    
+    public void initPojo(){
+    PojoCodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        pojoCodecRegistry = CodecRegistries.fromRegistries(
+                MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(pojoCodecProvider));
     }
 }
