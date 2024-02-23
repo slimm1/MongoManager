@@ -78,9 +78,8 @@ public class MongoConnector {
     
     private void tryConnectCollection(MongoClient client) throws MongoException{
         db = client.getDatabase(myProps.getProperty(AppConstants.PROP_DB)).withCodecRegistry(pojoCodecRegistry);
-        db.createCollection(myProps.getProperty(AppConstants.PROP_USER_COLLECTION));
-        db.createCollection(myProps.getProperty(AppConstants.PROP_SHOW_COLLECTION));
-        System.out.println("colecciones agregadas en " + myProps.getProperty(AppConstants.PROP_DB));
+        db.createCollection(myProps.getProperty(AppConstants.PROP_COLLECTION));
+        System.out.println("Colecciones agregadas en " + myProps.getProperty(AppConstants.PROP_DB));
     }
     
     public boolean dropDatabase(String dbName){

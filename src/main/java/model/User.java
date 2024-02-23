@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.bson.types.ObjectId;
@@ -13,6 +14,16 @@ public class User {
     private String username;
     private int edad;
     private List<Show> shows;
+    
+    public User(){
+        shows = new ArrayList();
+    }
+    
+    public User(String username, int edad, List<Show>shows){
+        this.username = username;
+        this.edad = edad;
+        this.shows = shows;
+    }
     
     public User(String username, int edad){
         this.username = username;
@@ -50,8 +61,6 @@ public class User {
     public void setShows(List<Show> shows) {
         this.shows = shows;
     }
-    
-    
 
     @Override
     public int hashCode() {

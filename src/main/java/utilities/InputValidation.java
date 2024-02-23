@@ -5,10 +5,26 @@ import java.util.Scanner;
 import org.bson.Document;
 
 /**
- *
  * @author Martin Ramonda
  */
 public class InputValidation {
+    
+    public static double validatePrice(String precio, Scanner input){
+        while(!precio.matches("^[0-9]*\\.?[0-9]+$")){
+            System.out.println("Valor incorrecto para precio, introducelo de nuevo:");
+            precio = input.nextLine();
+        }
+        return Integer.parseInt(precio);
+    }
+    
+    public static int validateAge(String age, Scanner input){
+        while(!age.matches("\\d+$")){
+            System.out.println("Valor incorrecto para edad, introducelo de nuevo:");
+            age = input.nextLine();
+        }
+        return Integer.parseInt(age);
+    }
+    
     public static int checkAnswer(String answer, int limit, Scanner input){
         //digitos positivos menores de 4
         while(!answer.matches("\\d+$") || Integer.parseInt(answer)>limit){
