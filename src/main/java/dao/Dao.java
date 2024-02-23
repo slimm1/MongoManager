@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 public interface Dao<T> {
     public boolean add(T objeto);
     public boolean remove(ObjectId id);
-    public boolean update(ObjectId id);
-    public List<T> list();
+    public boolean update(T objeto);
+    public List<T> listAll();
     
 }
