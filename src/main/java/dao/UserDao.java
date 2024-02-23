@@ -1,5 +1,6 @@
 package dao;
 
+import db.DataLoader;
 import java.util.List;
 import model.User;
 import org.bson.types.ObjectId;
@@ -10,23 +11,23 @@ import org.bson.types.ObjectId;
 public class UserDao implements Dao<User>{
 
     @Override
-    public boolean add(User objeto) {
-        return false;
+    public boolean add(User user) {
+        return DataLoader.getInstance().insertUserIntoDb(user);
     }
 
     @Override
     public boolean remove(ObjectId id) {
-        return false;
+        return DataLoader.getInstance().removeUserFromDb(id);
     }
 
     @Override
-    public boolean update(ObjectId id) {
-        return false;
+    public boolean update(User user) {
+        return DataLoader.getInstance().updateUserInDb(user);
     }
 
     @Override
     public List<User> list() {
-        return null;
+        return DataLoader.getInstance().getAllUsers();
     }
     
 }
