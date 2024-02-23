@@ -2,12 +2,14 @@ package model;
 
 import java.util.List;
 import java.util.Objects;
+import org.bson.types.ObjectId;
 
 /**
  * @author Martin Ramonda
  */
 public class Show {
     
+    private ObjectId id;
     private String titulo;
     private double precio;
     private List<User> usuarios;
@@ -40,6 +42,14 @@ public class Show {
 
     public void setUsuarios(List<User> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     @Override

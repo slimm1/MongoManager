@@ -35,7 +35,8 @@ public class AppProperties {
         properties.setProperty(AppConstants.PROP_HOST, "localhost");
         properties.setProperty(AppConstants.PROP_PORT, "57017");
         properties.setProperty(AppConstants.PROP_DB, "test");
-        properties.setProperty(AppConstants.PROP_COLLECTION, "user");
+        properties.setProperty(AppConstants.PROP_USER_COLLECTION, "user");
+        properties.setProperty(AppConstants.PROP_SHOW_COLLECTION, "show");
         properties.setProperty(AppConstants.PROP_MODIFIED, LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM)));
         saveProperties();
         System.out.println("Cargada configuración por defecto...");
