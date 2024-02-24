@@ -44,6 +44,9 @@ public class DataLoader {
     }
     
     public boolean removeUserFromDb(ObjectId id){
+        if (id == null) {
+            return false;
+        }
         try{
             Document doc = new Document("_id", id);
             userCollection.findOneAndDelete(doc);
@@ -55,11 +58,13 @@ public class DataLoader {
     }
     
     public List<User> listByShow(String show){
+        if(show.isEmpty()){return null;}
         Bson filter = Filters.eq("shows.titulo", show);
         return userCollection.find(filter).into(new ArrayList());
     }
     
     public List<User> listByUsername(String username){
+        if(username.isEmpty()){return null;}
         Bson filter = Filters.regex("username", username);
         return userCollection.find(filter).into(new ArrayList());
     }
