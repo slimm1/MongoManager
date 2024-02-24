@@ -21,15 +21,19 @@ public class MongoConnector {
     
     private static MongoConnector instance;
     
+    // clase cliente de mongo. se usa para instanciar la base de datos.
     private MongoClient client;
     
+    // clase de base de datos de mongo. se usa para acceder a las colecciones
     private MongoDatabase db;
     
     private AppProperties myProps;
     
+    // coded mongo. "serializa" las clases para escribirlas en la base de datos.
     private CodecRegistry pojoCodecRegistry;
     
     private MongoConnector(){
+        // inicia el codec pojo 
         initPojo();
         myProps = AppProperties.getInstance();
     }
@@ -41,10 +45,17 @@ public class MongoConnector {
         return instance;
     }
     
+    // calcula el conectionstring a través del host y el puerto 
     private String getConnectionString(){
         return AppConstants.CONNECTION_STRING + myProps.getProperty(AppConstants.PROP_HOST)+":" + myProps.getProperty(AppConstants.PROP_PORT);
     }
     
+    /***
+     * prueba la conexion a la base de datos mongo. La clase connectionString se crea a partir de la cadena de conexion.
+     * MongoClientSettings setermina unos ajustes para iniciar el cliente, que intenta conectarse a la base de datos desde el metodo
+     * tryConnectConnection(MongoClient)
+     * @return 
+     */
     public boolean tryConnect(){
         Thread t = new DotsAnimation();
         ConnectionString connString = new ConnectionString(getConnectionString());
@@ -76,6 +87,7 @@ public class MongoConnector {
         }
     }
     
+    // Instancia la base de datos con el codec pojo especificado en el constructor de esta clase. Además crea la coleccion almacenada en props
     private void tryConnectCollection(MongoClient client) throws MongoException{
         db = client.getDatabase(myProps.getProperty(AppConstants.PROP_DB)).withCodecRegistry(pojoCodecRegistry);
         db.createCollection(myProps.getProperty(AppConstants.PROP_COLLECTION));
@@ -108,6 +120,8 @@ public class MongoConnector {
         return databases;
     }
     
+    // inicia el codecregistry a traves del codec provider. estas instanciaciones son las que permiten que las clases se escriban automáticamente
+    //en la base de datos.
     public void initPojo(){
     PojoCodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         pojoCodecRegistry = CodecRegistries.fromRegistries(
