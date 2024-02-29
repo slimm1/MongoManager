@@ -1,9 +1,13 @@
 package db;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import model.Show;
 import model.User;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -82,6 +86,25 @@ public class UserDataLoader {
     //devuelve toda la coleccion en una lista de objetos.
     public List<User> getAllUsers(){
         return userCollection.find().into(new ArrayList());
+    }
+    
+    public Set<Show> getAllShow(){
+        Set<Show> allShows = new HashSet();
+        MongoCursor<User> cursor = userCollection.find().iterator();
+        while(cursor.hasNext()){
+            User u = cursor.next();
+            allShows.addAll(u.getShows());
+        }
+        return allShows;
+    }
+    
+    public Show getOneShow(Show show){
+        MongoCursor<User> cursor = userCollection.find().iterator();
+        while(cursor.hasNext()){
+            User u = cursor.next();
+            if(u.getShows().contains(show)) return u.getShows().get(u.getShows().indexOf(show));
+        }        
+        return null;
     }
     
     public static UserDataLoader getInstance(){

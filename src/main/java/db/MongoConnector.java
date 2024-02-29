@@ -123,8 +123,7 @@ public class MongoConnector {
     // inicia el codecregistry a traves del codec provider. estas instanciaciones son las que permiten que las clases se escriban automáticamente
     //en la base de datos.
     public void initPojo(){
-    PojoCodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        pojoCodecRegistry = CodecRegistries.fromRegistries(
-                MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(pojoCodecProvider));
+        PojoCodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(pojoCodecProvider));
     }
 }
