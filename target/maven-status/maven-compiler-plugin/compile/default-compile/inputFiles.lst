@@ -1,11 +1,12 @@
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\utilities\AppProperties.java
-I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\db\DataLoader.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\view\DatabaseMenu.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\process\DotsAnimation.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\utilities\FileManager.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\view\CollectionMenu.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\com\slimm1\login\Login.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\utilities\InputValidation.java
+I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\db\UserDataLoader.java
+I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\db\DocumentDataLoader.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\db\MongoConnector.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\model\User.java
 I:\DAM2023\ACCESODATOS\13.mongoLogin\MongoManager\src\main\java\dao\Dao.java
