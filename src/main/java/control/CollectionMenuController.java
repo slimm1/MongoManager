@@ -80,7 +80,11 @@ public class CollectionMenuController {
                 listByAge();
                 launchMenu();
             }
-            case 10 -> DbMenuController.getInstance().launchMenu();
+            case 10 -> {
+                listShows();
+                launchMenu();
+            }
+            case 11 -> DbMenuController.getInstance().launchMenu();
         }
     }
     
@@ -184,6 +188,12 @@ public class CollectionMenuController {
         System.out.println("--> RESULTADOS de la busqueda: ");
         for(User u:userDao.listByAge(age)){
             System.out.println("\t->"+u.getUsername());
+        }
+    }
+
+    private void listShows() {
+        for(Show s : userDao.listAllShows()){
+            System.out.println("\t-> " + s.getTitulo());
         }
     }
 }

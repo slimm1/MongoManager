@@ -1,3 +1,4 @@
+db\PojoDataLoader.class
 model\Show.class
 control\CollectionMenuController.class
 utilities\FileManager.class
@@ -9,7 +10,6 @@ com\slimm1\login\Login.class
 utilities\InputValidation.class
 view\CollectionMenu.class
 control\DbMenuController.class
-db\UserDataLoader.class
 utilities\AppConstants.class
 view\DatabaseMenu.class
 dao\Dao.class

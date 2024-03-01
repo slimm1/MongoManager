@@ -19,6 +19,7 @@ public class CollectionMenu {
         System.out.println("7. listar usuarios por show");
         System.out.println("8. buscar usuarios por nombre");
         System.out.println("9. buscar usuarios por edad");
-        System.out.println("10. volver");
+        System.out.println("10. listar todos los shows");
+        System.out.println("11. volver");
     }
 }

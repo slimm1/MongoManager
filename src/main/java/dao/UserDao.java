@@ -2,6 +2,8 @@ package dao;
 
 import db.PojoDataLoader;
 import java.util.List;
+import java.util.Set;
+import model.Show;
 import model.User;
 import org.bson.types.ObjectId;
 
@@ -40,5 +42,9 @@ public class UserDao implements Dao<User>{
 
     public List<User> listByAge(int age){
         return PojoDataLoader.getInstance().listByAge(age);
+    }
+    
+    public Set<Show> listAllShows(){
+        return PojoDataLoader.getInstance().getAllShow();
     }
 }
