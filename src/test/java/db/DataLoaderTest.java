@@ -20,7 +20,7 @@ public class DataLoaderTest {
         System.out.println("Insert null user into db");
         User user = null;
         boolean expResult = false;
-        boolean result = UserDataLoader.getInstance().insertUserIntoDb(user);
+        boolean result = PojoDataLoader.getInstance().insertUserIntoDb(user);
         assertEquals(expResult, result);
     }
 
@@ -29,7 +29,7 @@ public class DataLoaderTest {
         System.out.println("update null user");
         User user = null;
         boolean expResult = false;
-        boolean result = UserDataLoader.getInstance().updateUserInDb(user);
+        boolean result = PojoDataLoader.getInstance().updateUserInDb(user);
         assertEquals(expResult, result);
     }
 
@@ -38,7 +38,7 @@ public class DataLoaderTest {
         System.out.println("remove null user");
         ObjectId id = null;
         boolean expResult = false;
-        boolean result = UserDataLoader.getInstance().removeUserFromDb(id);
+        boolean result = PojoDataLoader.getInstance().removeUserFromDb(id);
         assertEquals(expResult, result);
     }
 
@@ -47,7 +47,7 @@ public class DataLoaderTest {
         System.out.println("list By Empty Show");
         String show = "";
         List<User> expResult = null;
-        List<User> result = UserDataLoader.getInstance().listByShow(show);
+        List<User> result = PojoDataLoader.getInstance().listByShow(show);
         assertEquals(expResult, result);
     }
 
@@ -56,7 +56,7 @@ public class DataLoaderTest {
         System.out.println("list By Empty Username");
         String username = "";
         List<User> expResult = null;
-        List<User> result = UserDataLoader.getInstance().listByUsername(username);
+        List<User> result = PojoDataLoader.getInstance().listByUsername(username);
         assertEquals(expResult, result);
     }
     

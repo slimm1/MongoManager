@@ -17,14 +17,14 @@ import org.bson.types.ObjectId;
  * @author Martin Ramonda
  * Esta clase incluye los métodos de acceso a la base de datos.
  */
-public class UserDataLoader {
+public class PojoDataLoader {
     
     private MongoCollection<User> userCollection;
     
-    private static UserDataLoader instance;
+    private static PojoDataLoader instance;
     
     // inicia la collecion en mongo a través de la base de datos de MongoConnector.
-    private UserDataLoader(){
+    private PojoDataLoader(){
         userCollection = MongoConnector.getInstance().getDatabase().getCollection("user", User.class);
     }
     
@@ -107,9 +107,9 @@ public class UserDataLoader {
         return null;
     }
     
-    public static UserDataLoader getInstance(){
+    public static PojoDataLoader getInstance(){
         if(instance==null){
-            instance = new UserDataLoader();
+            instance = new PojoDataLoader();
         }
         return instance;
     }
